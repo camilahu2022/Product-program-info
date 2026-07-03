@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product Program Info · 项目作品集</title>
+<style>
+  :root{
+    --ink:#0e1726;
+    --ink-soft:#475569;
+    --line:#e5e7eb;
+    --bg:#fafafa;
+    --card:#ffffff;
+    --accent:#f0436a;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:80px 24px 96px;}
+  .eyebrow{
+    display:inline-block;
+    font-size:12px;
+    letter-spacing:1.2px;
+    color:var(--accent);
+    text-transform:uppercase;
+    font-weight:600;
+    margin-bottom:18px;
+  }
+  h1{
+    font-size:38px;
+    line-height:1.25;
+    margin:0 0 14px;
+    letter-spacing:-0.5px;
+  }
+  .lede{
+    font-size:17px;
+    color:var(--ink-soft);
+    margin:0 0 48px;
+    max-width:60ch;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:18px;
+  }
+  @media (min-width:720px){
+    .grid{grid-template-columns:1fr 1fr;}
+  }
+  a.card{
+    display:block;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:24px 26px;
+    text-decoration:none;
+    color:inherit;
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  a.card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 24px -10px rgba(15,23,42,.12);
+    border-color:#cbd5e1;
+  }
+  .card .tag{
+    display:inline-block;
+    font-size:11px;
+    color:var(--accent);
+    background:#fde7ec;
+    border-radius:4px;
+    padding:2px 8px;
+    margin-bottom:10px;
+    font-weight:600;
+    letter-spacing:.4px;
+  }
+  .card h2{
+    font-size:20px;
+    margin:0 0 8px;
+  }
+  .card p{
+    font-size:14.5px;
+    color:var(--ink-soft);
+    margin:0;
+  }
+  .card .arrow{
+    display:inline-block;
+    margin-top:14px;
+    font-size:13px;
+    color:var(--accent);
+    font-weight:600;
+  }
+  .empty{
+    border:1px dashed var(--line);
+    border-radius:12px;
+    padding:20px 22px;
+    color:var(--ink-soft);
+    font-size:14.5px;
+    background:#ffffff80;
+  }
+  footer{
+    margin-top:64px;
+    font-size:13px;
+    color:#94a3b8;
+    text-align:center;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="eyebrow">PORTFOLIO · 2026</span>
+    <h1>Product Program Info</h1>
+    <p class="lede">腾讯地图·探索社区 PM 实习期间的项目作品集。每个项目以单页 HTML 形式组织，附产品截图、关键判断与真实数据。</p>
+
+    <div class="grid">
+      <a class="card" href="./小红书-好内容-onepage/">
+        <span class="tag">已上线</span>
+        <h2>小红书「好内容-创意灵感」</h2>
+        <p>从博主找灵感、看样板、发后复盘三步切入的 0→1 产品。含产品形态、关键判断与一期渗透数据。</p>
+        <span class="arrow">查看 onepage →</span>
+      </a>
+
+      <div class="empty">更多项目陆续整理中。</div>
+    </div>
+
+    <footer>© 2026 · camilahu2022 · GitHub Pages</footer>
+  </div>
+</body>
+</html>
