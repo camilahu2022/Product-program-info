@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小红书 · 「好内容-创意灵感」｜蒲公英创作工具 0→1</title>
+<style>
+  :root{
+    --ink:#2a1a1d;
+    --ink-soft:#6a525a;
+    --ink-faint:#9b858d;
+    --line:#f0e2e4;
+    --paper:#fdf7f7;
+    --card:#ffffff;
+    --accent:#f0436a;
+    --accent-deep:#c61e4a;
+    --accent-soft:#ffe9ee;
+    --warn:#d9742b;
+    --ok:#1f9d6b;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    background:
+      radial-gradient(1200px 480px at 80% -10%, #ffd9e2 0%, rgba(255,217,226,0) 60%),
+      linear-gradient(180deg,#ffffff 0%,#fdf7f7 100%);
+    border-bottom:1px solid var(--line);
+    padding:76px 0 60px;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:13px;letter-spacing:.12em;font-weight:600;
+    color:var(--accent-deep);background:var(--accent-soft);
+    border:1px solid #ffd0db;border-radius:999px;
+    padding:6px 14px;margin-bottom:24px;
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);}
+  h1.title{
+    font-size:clamp(30px,5vw,50px);
+    line-height:1.18;font-weight:800;letter-spacing:-.01em;
+    margin-bottom:20px;max-width:20ch;
+  }
+  h1.title .hl{color:var(--accent);}
+  .lede{
+    font-size:clamp(16px,2vw,19px);
+    color:var(--ink-soft);max-width:60ch;margin-bottom:10px;
+  }
+  .lede strong{color:var(--ink);font-weight:700;}
+  .meta-row{
+    display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;
+  }
+  .chip{
+    font-size:13px;color:var(--ink-soft);
+    background:#fff;border:1px solid var(--line);
+    border-radius:8px;padding:7px 13px;
+  }
+  .chip b{color:var(--ink);}
+
+  /* ---------- section ---------- */
+  section{padding:60px 0;}
+  section.alt{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .kicker{
+    font-size:13px;font-weight:700;letter-spacing:.14em;
+    color:var(--accent);text-transform:uppercase;margin-bottom:12px;
+  }
+  h2{
+    font-size:clamp(23px,3.2vw,31px);font-weight:800;
+    line-height:1.3;margin-bottom:14px;letter-spacing:-.01em;
+  }
+  .sub{font-size:16px;color:var(--ink-soft);max-width:66ch;margin-bottom:36px;}
+  .sub b{color:var(--ink);font-weight:700;}
+
+  /* ---------- product flow (gallery) ---------- */
+  .flow{display:flex;flex-direction:column;gap:26px;}
+  .fstep{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:#fff;}
+  .fstep .feat{display:grid;grid-template-columns:1.2fr 1fr;}
+  .fstep.rev .feat{grid-template-columns:1fr 1.2fr;}
+  @media(max-width:820px){.fstep .feat,.fstep.rev .feat{grid-template-columns:1fr;}}
+  .fstep .lead{
+    background:linear-gradient(160deg,#ffffff,#fdf0f3);
+    padding:26px;display:flex;align-items:center;justify-content:center;
+    border-right:1px solid var(--line);
+  }
+  .fstep.rev .lead{order:2;border-right:none;border-left:1px solid var(--line);}
+  @media(max-width:820px){
+    .fstep .lead,.fstep.rev .lead{order:0;border-right:none;border-left:none;border-bottom:1px solid var(--line);}
+  }
+  .fstep .lead img{width:100%;border-radius:12px;border:1px solid var(--line);box-shadow:0 14px 34px rgba(198,30,74,.12);display:block;}
+  .fstep .info{padding:32px 32px;display:flex;flex-direction:column;justify-content:center;}
+  .fstep.rev .info{order:1;}
+  .fstep .stepno{display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:800;color:var(--accent-deep);letter-spacing:.12em;margin-bottom:13px;text-transform:uppercase;}
+  .fstep .stepno .b{width:23px;height:23px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;}
+  .fstep .mod{font-size:21px;font-weight:800;margin-bottom:12px;line-height:1.3;}
+  .fstep .mod small{display:block;font-size:13.5px;font-weight:600;color:var(--ink-faint);margin-top:4px;}
+  .fstep .jtbd{
+    font-size:14px;color:var(--ink-soft);background:var(--accent-soft);
+    border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
+    padding:11px 15px;margin-bottom:16px;line-height:1.62;
+  }
+  .fstep .jtbd b{color:var(--accent-deep);font-weight:700;}
+  .fstep .cando{list-style:none;padding:0;margin:0;}
+  .fstep .cando li{font-size:14px;color:var(--ink-soft);padding-left:18px;position:relative;margin-bottom:8px;line-height:1.6;}
+  .fstep .cando li:last-child{margin-bottom:0;}
+  .fstep .cando li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--accent);}
+  .fstep .mini{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);}
+  .fstep .mini.two{grid-template-columns:repeat(2,1fr);}
+  @media(max-width:640px){.fstep .mini,.fstep .mini.two{grid-template-columns:1fr 1fr;}}
+  .fstep .mini .m{padding:16px;border-right:1px solid var(--line);}
+  .fstep .mini .m:last-child{border-right:none;}
+  .fstep .mini .m img{width:100%;border-radius:8px;border:1px solid var(--line);display:block;background:#faf3f4;}
+  .fstep .mini .m span{display:block;font-size:12.5px;color:var(--ink-soft);margin-top:9px;line-height:1.5;}
+  .fstep .mini .m span b{color:var(--ink);font-weight:700;}
+
+  /* ---------- pillar cards ---------- */
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+  @media(max-width:860px){.grid2{grid-template-columns:1fr;}}
+  .pillar{
+    background:#fff;border:1px solid var(--line);border-radius:16px;
+    padding:28px 26px;transition:.2s;position:relative;overflow:hidden;
+  }
+  .pillar:hover{box-shadow:0 10px 30px rgba(198,30,74,.08);transform:translateY(-2px);}
+  .pillar .tag{
+    display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;
+    color:#fff;background:var(--accent);border-radius:6px;padding:4px 10px;margin-bottom:14px;
+  }
+  .pillar h3{font-size:18px;font-weight:800;margin-bottom:12px;line-height:1.4;}
+  .pillar ul{margin:0;padding-left:0;list-style:none;}
+  .pillar ul li{
+    font-size:14px;color:var(--ink-soft);padding-left:18px;position:relative;margin-bottom:8px;line-height:1.6;
+  }
+  .pillar ul li:last-child{margin-bottom:0;}
+  .pillar ul li::before{
+    content:"";position:absolute;left:0;top:9px;width:7px;height:7px;
+    border-radius:2px;background:var(--accent);
+  }
+  .pillar .hi{color:var(--accent-deep);font-weight:700;}
+
+  /* ---------- two-plan compare ---------- */
+  .plans{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media(max-width:820px){.plans{grid-template-columns:1fr;}}
+  .plan{border:1px solid var(--line);border-radius:16px;padding:24px 24px;background:#fff;position:relative;}
+  .plan.win{border-color:var(--accent);box-shadow:0 8px 26px rgba(198,30,74,.08);}
+  .plan .ph{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px;}
+  .plan .ph .pn{font-size:15.5px;font-weight:800;}
+  .plan .verdict{font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap;}
+  .plan .verdict.no{color:var(--ink-faint);background:#f3eef0;}
+  .plan .verdict.yes{color:#fff;background:var(--accent);}
+  .plan ul{list-style:none;padding:0;margin:0;}
+  .plan ul li{font-size:13.5px;color:var(--ink-soft);padding-left:18px;position:relative;margin-bottom:7px;line-height:1.6;}
+  .plan ul li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--accent);}
+  .plan .cost{margin-top:13px;padding-top:13px;border-top:1px dashed var(--line);font-size:13px;color:var(--ink);font-weight:600;}
+
+  /* ---------- model steps ---------- */
+  .qc{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+  @media(max-width:640px){.qc{grid-template-columns:1fr;}}
+  .qc .sc{border:1px solid var(--line);border-radius:12px;padding:15px 18px;background:#fff;}
+  .qc .sc .lv{font-size:13px;font-weight:800;color:var(--accent-deep);margin-bottom:5px;}
+  .qc .sc p{font-size:13px;color:var(--ink-soft);line-height:1.55;}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  @media(max-width:860px){.steps{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:520px){.steps{grid-template-columns:1fr;}}
+  .step{border:1px solid var(--line);border-radius:14px;padding:20px 18px;background:#fff;}
+  .step .sn{font-size:12px;font-weight:800;color:var(--accent);letter-spacing:.08em;margin-bottom:9px;}
+  .step h4{font-size:15px;font-weight:800;margin-bottom:7px;line-height:1.35;}
+  .step p{font-size:13px;color:var(--ink-soft);line-height:1.6;}
+
+  /* ---------- stage tag ---------- */
+  .stage{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;border-radius:999px;padding:4px 12px;margin-left:10px;vertical-align:middle;}
+  .stage.done{color:var(--ok);background:#e6f6ef;}
+  .stage.doing{color:var(--warn);background:#fbeee2;}
+  .stage .d{width:6px;height:6px;border-radius:50%;background:currentColor;}
+
+  /* ---------- results (demoted) ---------- */
+  .res{display:grid;grid-template-columns:1fr 1.15fr;gap:18px;}
+  @media(max-width:820px){.res{grid-template-columns:1fr;}}
+  .res .box{border:1px solid var(--line);border-radius:16px;padding:26px 28px;background:#fff;}
+  .res .box.win{background:linear-gradient(160deg,#fff,#fff4f6);border-color:#ffd0db;}
+  .res .box .bt{font-size:12.5px;font-weight:800;letter-spacing:.08em;margin-bottom:18px;color:var(--ink-faint);text-transform:uppercase;}
+  .res .box.win .bt{color:var(--accent-deep);}
+  .res .rown{display:flex;align-items:baseline;gap:14px;margin-bottom:15px;}
+  .res .rown:last-child{margin-bottom:0;}
+  .res .rown .v{font-size:27px;font-weight:800;line-height:1;min-width:112px;letter-spacing:-.01em;color:var(--ink);}
+  .res .box.win .v{color:var(--accent-deep);}
+  .res .rown .v .ar{font-size:16px;opacity:.5;margin:0 3px;}
+  .res .rown .v .u{font-size:15px;}
+  .res .rown .k{font-size:13.5px;color:var(--ink-soft);line-height:1.5;}
+  .note{font-size:12.5px;color:var(--ink-faint);margin-top:20px;line-height:1.7;}
+  .note b{color:var(--ink-soft);}
+
+  /* ---------- footer ---------- */
+  footer{padding:52px 0 64px;text-align:center;color:var(--ink-faint);font-size:13px;}
+  footer .line{width:46px;height:3px;background:var(--accent);border-radius:2px;margin:0 auto 22px;}
+  footer .q{
+    font-size:16px;color:var(--ink-soft);max-width:52ch;margin:0 auto 20px;line-height:1.75;font-weight:500;
+  }
+  footer .q b{color:var(--ink);}
+
+  /* ---------- motion ---------- */
+  /* hero 载入：渐入上浮，元素依次进场（纯 CSS，无脚本也生效） */
+  @keyframes riseIn{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:none;}}
+  .hero .eyebrow{animation:riseIn .7s cubic-bezier(.2,.7,.2,1) both;}
+  .hero h1.title{animation:riseIn .7s cubic-bezier(.2,.7,.2,1) .08s both;}
+  .hero .lede:nth-of-type(1){animation:riseIn .7s cubic-bezier(.2,.7,.2,1) .16s both;}
+  .hero .lede:nth-of-type(2){animation:riseIn .7s cubic-bezier(.2,.7,.2,1) .24s both;}
+  .hero .meta-row{animation:riseIn .7s cubic-bezier(.2,.7,.2,1) .32s both;}
+  .hero .meta-row .chip{transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;}
+  .hero .meta-row .chip:hover{transform:translateY(-2px);border-color:#ffd0db;box-shadow:0 6px 16px rgba(198,30,74,.08);}
+
+  /* 滚动进场：由脚本加 .reveal 初始态，进入视口加 .in（无脚本则不加类，正常显示） */
+  .reveal{opacity:0;transform:translateY(26px);
+    transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);}
+  .reveal.in{opacity:1;transform:none;}
+
+  /* 流程卡：整卡上浮 + 主视觉轻微放大 */
+  .fstep{transition:transform .28s ease, box-shadow .28s ease;}
+  .fstep:hover{transform:translateY(-4px);box-shadow:0 22px 46px rgba(198,30,74,.13);}
+  .fstep .lead{overflow:hidden;}
+  .fstep .lead img{transition:transform .5s cubic-bezier(.2,.7,.2,1);}
+  .fstep:hover .lead img{transform:scale(1.035);}
+  .fstep .stepno .b{transition:transform .28s ease;}
+  .fstep:hover .stepno .b{transform:rotate(-8deg) scale(1.08);}
+  .fstep .mini .m img{transition:transform .4s ease;}
+  .fstep .mini .m:hover img{transform:scale(1.04);}
+
+  /* 判断题两栏、模型步骤卡：hover 抬升 */
+  .plan{transition:transform .24s ease, box-shadow .24s ease;}
+  .plan:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(198,30,74,.10);}
+  .step{transition:transform .24s ease, box-shadow .24s ease, border-color .24s ease;}
+  .step:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(198,30,74,.09);border-color:#ffd0db;}
+  .qc .sc{transition:transform .24s ease, box-shadow .24s ease;}
+  .qc .sc:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(198,30,74,.08);}
+
+  /* 结果箭头轻脉动，强调「变化」 */
+  @keyframes nudge{0%,100%{transform:translateX(0);}50%{transform:translateX(3px);}}
+  .res .rown .v .ar{display:inline-block;animation:nudge 1.8s ease-in-out infinite;}
+
+  /* 无障碍：尊重系统「减少动态效果」 */
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none !important;}
+    .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span>小红书 · 蒲公英 &amp; 买手　商业部</span>
+    <h1 class="title">让博主写商单时，<br>先有<span class="hl">灵感</span>、再能<span class="hl">复盘</span></h1>
+    <p class="lede">从创作工具切入，帮图文博主在写商单时<strong>找灵感、找对标、做复盘</strong>。</p>
+    <p class="lede">蒲公英里 14% 的优质笔记贡献了近三成流水。把「好内容」做成产品，就是把这条供给做厚。</p>
+    <div class="meta-row">
+      <span class="chip"><b>项目</b>　「好内容-创意灵感」产品 0→1</span>
+      <span class="chip"><b>周期</b>　2025.10 至 2026.04</span>
+    </div>
+  </div>
+</header>
+
+<!-- 产品：跟着创作流程走一遍（画廊主线） -->
+<section class="alt">
+  <div class="wrap">
+    <div class="kicker">The Product</div>
+    <h2>产品长什么样：跟着博主的创作流程走一遍</h2>
+    <p class="sub">博主接一篇商单，通常要走「<b>找灵感 → 看样板 → 发后复盘</b>」三步。产品的三个模块，正好一步接一步地接住。下面每一步都是已上线 / 已下放的真实界面。</p>
+
+    <div class="flow">
+
+      <!-- STEP 1 -->
+      <div class="fstep">
+        <div class="feat">
+          <div class="lead"><img src="assets/热门内容/热门内容主界面.png" alt="热门内容主界面"></div>
+          <div class="info">
+            <div class="stepno"><span class="b">1</span>找灵感 · 找对标</div>
+            <div class="mod">热门内容<small>检索热门商业内容，快速找到能对标的选题</small></div>
+            <div class="jtbd">博主痛点：<b>写商单前，不知道写什么、对标谁。</b></div>
+            <ul class="cando">
+              <li>按逗号批量检索热门商业内容，分内容 / 电商 / 小红书三档榜单</li>
+              <li>可按行业、粉丝量级、阅读率 / 发布时间多维筛选，锁定同赛道对标</li>
+              <li>点开一篇即可看内容特征与上下游相关灵感，顺藤拓选题</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mini">
+          <div class="m"><img src="assets/热门内容/热门内容-查询内容特征-生成图.png" alt="内容特征"><span><b>内容特征</b>　图文/视频占比、题材分布</span></div>
+          <div class="m"><img src="assets/热门内容/热门内容-相关灵感-上下游.png" alt="相关灵感"><span><b>相关灵感</b>　上下游搜索词拓选题</span></div>
+          <div class="m"><img src="assets/热门内容/热门内容-粉丝量召回.png" alt="粉丝量召回"><span><b>粉丝量召回</b>　按粉丝量级筛可对标内容</span></div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="fstep rev">
+        <div class="feat">
+          <div class="lead"><img src="assets/优质案例/优质案例.png" alt="优质案例库"></div>
+          <div class="info">
+            <div class="stepno"><span class="b">2</span>看样板 · 抄作业</div>
+            <div class="mod">优质案例<small>分行业的品牌合作样板库，好内容长什么样一目了然</small></div>
+            <div class="jtbd">博主痛点：<b>有了方向，但不知道好内容具体长什么样。</b></div>
+            <ul class="cando">
+              <li>按行业更新品牌合作的优质笔记，给博主可直接参照的样板</li>
+              <li>点进单篇可拆解封面、标题、正文与表现数据，看清「好在哪」</li>
+              <li>从首页工作台即可进入，融进博主日常动线</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mini two">
+          <div class="m"><img src="assets/优质案例/优质案例-笔记详情.png" alt="笔记详情"><span><b>笔记详情</b>　拆解单篇优质笔记的表现数据</span></div>
+          <div class="m"><img src="assets/首页.png" alt="博主工作台"><span><b>产品首页</b>　蒲公英工作台，案例入口在此</span></div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="fstep">
+        <div class="feat">
+          <div class="lead"><img src="assets/内容洞察/内容洞察-粉丝人群.png" alt="内容洞察-粉丝人群"></div>
+          <div class="info">
+            <div class="stepno"><span class="b">3</span>发后复盘 · 迭代人群</div>
+            <div class="mod">内容洞察<small>按粉丝人群看关键词表现，把单次创作变成可迭代的能力</small></div>
+            <div class="jtbd">博主痛点：<b>发布之后，不知道触达了谁、下次该怎么改。</b></div>
+            <ul class="cando">
+              <li>按博主粉丝人群看关键词 TOP 表现，知道内容真正打中了谁</li>
+              <li>关键词分布用词云 / 条形图看热词量级，定下一篇的选题</li>
+              <li>可切全量视角对照，判断是打人群还是打大盘</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mini two">
+          <div class="m"><img src="assets/内容洞察/内容洞察-关键词分布.png" alt="关键词分布"><span><b>关键词分布</b>　词云 / 条形图看热词量级</span></div>
+          <div class="m"><img src="assets/内容洞察/内容洞察-全部人群.png" alt="全部人群"><span><b>全部人群</b>　全量视角对照粉丝人群</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 我的角色 -->
+<section>
+  <div class="wrap">
+    <div class="kicker">My Role</div>
+    <h2>我在里面具体做了什么</h2>
+    <p class="sub">从调研定方向、设计定架构，到策略定迭代、数据定下一步，四段各有明确的产出。</p>
+    <div class="grid2">
+
+      <div class="pillar">
+        <span class="tag">前期调研</span>
+        <h3>调研站内外，锁定切入点</h3>
+        <ul>
+          <li>拆解站内「灵犀」等核心模块的能力与使用链路</li>
+          <li>调研站外竞品在博主创作引导上的做法，作为方案参考</li>
+          <li>梳理博主写商单的动线，定下「创作工具 + 好内容引导」的切入方向</li>
+        </ul>
+      </div>
+
+      <div class="pillar">
+        <span class="tag">需求设计</span>
+        <h3>负责「热门内容」的架构、交互与埋点</h3>
+        <ul>
+          <li>产出「热门内容」信息架构、交互逻辑与原型图</li>
+          <li>协同研发设计埋点方案与数据看板需求</li>
+          <li>完成埋点校验、跟进研发把数据链路跑通</li>
+        </ul>
+      </div>
+
+      <div class="pillar">
+        <span class="tag">策略优化</span>
+        <h3>提出「内容洞察」粉丝人群包迭代思路</h3>
+        <ul>
+          <li>设计粉丝人群包的个性化迭代思路并推动落地</li>
+          <li>迭代前后测博主 NPS，由 <span class="hi">13.73 提升至 15+</span></li>
+        </ul>
+      </div>
+
+      <div class="pillar">
+        <span class="tag">用户分析</span>
+        <h3>从灰测到一期，用数据支撑二期方向</h3>
+        <ul>
+          <li>灰测阶段：设计调研问卷、回收并复盘数据</li>
+          <li>一期阶段：分析渗透率趋势与留存分层，输出二期策略方向</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 两个需要判断的地方 -->
+<section class="alt">
+  <div class="wrap">
+    <div class="kicker">Judgment Calls</div>
+    <h2>两个需要自己判断的地方</h2>
+    <p class="sub">产品能不能落地，往往卡在这种没有标准答案的地方。这里放两个我实际参与判断的点。</p>
+
+    <!-- 技术权衡 -->
+    <h3 style="font-size:18px;font-weight:800;margin-bottom:8px;">① 把「算不动」的方案推到「能落地」<span class="stage done"><span class="d"></span>方案已决策</span></h3>
+    <p style="font-size:14.5px;color:var(--ink-soft);max-width:66ch;margin-bottom:18px;line-height:1.7;">好内容的数据能力本想直接复用现有工具，研发评估后发现直接算算力扛不住。我把两条路径的成本摆开对比，帮团队把一期的实现方案定下来。不是我拍板，而是把权衡讲清楚、让决策有依据。</p>
+    <div class="plans" style="margin-bottom:38px;">
+      <div class="plan win">
+        <div class="ph"><span class="pn">方案一 · 复用「灵犀」接口</span><span class="verdict yes">一期采用</span></div>
+        <ul>
+          <li>复用灵犀已有的行业 / 内容洞察能力，按博主场景做数据精简与展示改造</li>
+          <li>对博主隐藏理解成本高、不适配的功能，降低门槛</li>
+          <li>一期研发成本 ≥ 3PD，可控可交付</li>
+        </ul>
+        <div class="cost">结论：一期唯一可行路径</div>
+      </div>
+      <div class="plan">
+        <div class="ph"><span class="pn">方案二 · 数仓表复用</span><span class="verdict no">已排除</span></div>
+        <ul>
+          <li>直接从数仓宽表按需计算博主维度数据</li>
+          <li>当日查询博主数超过 100 即算力吃紧、响应不可用</li>
+          <li>实时性与规模化都撑不住</li>
+        </ul>
+        <div class="cost">结论：整体不可行，排除</div>
+      </div>
+    </div>
+
+    <!-- 内容模型 -->
+    <h3 style="font-size:18px;font-weight:800;margin-bottom:8px;">② 给「什么算好内容」定一套判定方法<span class="stage done"><span class="d"></span>建模方案设计完成</span></h3>
+    <p style="font-size:14.5px;color:var(--ink-soft);max-width:66ch;margin-bottom:18px;line-height:1.7;">好内容不能靠拍脑袋。我参与设计了一套判定方法：先用「三感六度」定分级标准，再从优质样本反向归因出共性，反哺成博主能照着做的建议。整套建模方案已设计完成。</p>
+    <div class="qc">
+      <div class="sc"><div class="lv">评分标准 · 3 分</div><p>基本满足「三感六度」的优质内容判定线。</p></div>
+      <div class="sc"><div class="lv">评分标准 · 4 分</div><p>完美契合三感六度，或达标且在创意 / 审美任一维度为标杆。</p></div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="sn">STEP 1</div><h4>筛优质样本</h4><p>从笔记流量宽表取各行业近 30 天的优质笔记，选综合评分 Top 样本。</p></div>
+      <div class="step"><div class="sn">STEP 2</div><h4>定评价维度</h4><p>结合「3 天短周期数据口径」与市场团队「三感六度」定性标准。</p></div>
+      <div class="step"><div class="sn">STEP 3</div><h4>结构化归因</h4><p>提取阅读、点击、互动、种草流转、进店、封面等字段做单篇归因。</p></div>
+      <div class="step"><div class="sn">STEP 4</div><h4>共性反哺</h4><p>跨样本总结共性规律，转成博主可直接参照的创作建议。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 背景与结果（降级） -->
+<section>
+  <div class="wrap">
+    <div class="kicker">Context &amp; Results</div>
+    <h2>为什么值得做，做出了什么</h2>
+    <p class="sub">背景说明这件事的杠杆有多大，结果是一期实际跑出的正向数据。</p>
+    <div class="res">
+      <div class="box">
+        <div class="bt">背景 · 为什么做</div>
+        <div class="rown"><div class="v">14<span class="u">%</span></div><div class="k">优质笔记占蒲公英总笔记的比例</div></div>
+        <div class="rown"><div class="v">28<span class="u">%</span></div><div class="k">优质笔记贡献的蒲公英流水占比</div></div>
+        <div class="rown"><div class="v">36<span class="u">%</span></div><div class="k">优质笔记贡献的笔记广告流水占比</div></div>
+      </div>
+      <div class="box win">
+        <div class="bt">结果 · 一期跑出的数据</div>
+        <div class="rown"><div class="v">13.73<span class="ar">→</span>15<span class="u">+</span></div><div class="k">博主 NPS 口碑（人群包个性化迭代前后）</div></div>
+        <div class="rown"><div class="v">7<span class="u">%</span><span class="ar">→</span>10<span class="u">%</span></div><div class="k">产品渗透率（一期全量口径，数据分析驱动）</div></div>
+        <div class="rown"><div class="v">38<span class="u">%</span><span class="ar">→</span>40<span class="u">%</span></div><div class="k">好内容撬动的广告流水占比</div></div>
+      </div>
+    </div>
+    <p class="note"><b>口径说明：</b>上方渗透率 7%→10% 为一期全量口径。另有 12/16 至 1/6 的 100 人内测小范围复盘：目标人群渗透 40%（累计 UV / 内测用户）、整体满意 89%，口径不同，不与全量混用。<br><b>调研支撑：</b>定性访谈 8 位博主 + 3 家 MCN，定量回收有效问卷 1762 份（近 60 天有蒲公英商单）。</p>
+  </div>
+</section>
+
+<!-- footer -->
+<footer>
+  <div class="wrap">
+    <div class="line"></div>
+    <p class="q">从「给博主一个工具」，到「好内容真的能撬动广告流水」，<br>也是我把 <b>产品感</b> 沉淀成 <b>商业感</b> 的一次进化。</p>
+    <div style="font-size:13px;">小红书 · 「好内容-创意灵感」蒲公英创作工具　|　个人项目介绍页</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // 尊重系统「减少动态效果」偏好：直接不做进场动画
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // 需要滚动进场的元素：各 section 的标题区与卡片
+  var targets = document.querySelectorAll(
+    'section .kicker, section h2, section .sub, .fstep, .pillar, .plan, .step, .qc .sc, .res .box, section > .wrap > h3, section > .wrap > p'
+  );
+  if (reduce || !('IntersectionObserver' in window)) { return; } // 降级：内容保持原样，正常可见
+
+  // 打上初始隐藏态，并按同一容器内顺序给出错峰延时
+  targets.forEach(function(el){
+    el.classList.add('reveal');
+    if (el.classList.contains('fstep') || el.classList.contains('pillar') ||
+        el.classList.contains('plan') || el.classList.contains('step') ||
+        el.classList.contains('sc') || el.classList.contains('box')) {
+      var sibs = Array.prototype.filter.call(el.parentNode.children, function(c){
+        return c.className && c.className === el.className;
+      });
+      var idx = sibs.indexOf(el);
+      if (idx > 0) el.style.transitionDelay = Math.min(idx, 4) * 0.08 + 's';
+    }
+  });
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+  targets.forEach(function(el){ io.observe(el); });
+})();
+</script>
+
+</body>
+</html>
